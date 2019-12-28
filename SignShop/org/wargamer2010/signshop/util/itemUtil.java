@@ -513,7 +513,7 @@ public class itemUtil {
                 stacks[0] = isCurrent;
 
                 sItems.add((isCurrent.getAmount() + Storage.getItemSeperator()
-                		+ isCurrent.getType().getId() + Storage.getItemSeperator()
+                		+ isCurrent.getType().name() + Storage.getItemSeperator()
                         + isCurrent.getDurability() + Storage.getItemSeperator()
                         + isCurrent.getData().getData() + Storage.getItemSeperator()
                         + signshopUtil.convertEnchantmentsToString(isCurrent.getEnchantments()) + Storage.getItemSeperator()
