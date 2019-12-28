@@ -19,8 +19,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.SimpleAttachableMaterialData;
 import org.wargamer2010.signshop.Seller;
 import org.wargamer2010.signshop.blocks.BookFactory;
 import org.wargamer2010.signshop.blocks.BukkitSerialization;
@@ -141,38 +139,6 @@ public class itemUtil {
         return roman;
     }
 
-    public static String formatData(MaterialData data) {
-        short s = 0;
-        return formatData(data, s);
-    }
-
-    public static String formatData(MaterialData data, short durability) {
-        String sData;
-        // Lookup spout custom material
-        // For some reason running tostring on data when it's from an attachable material
-        // will cause a NullPointerException, thus if we're dealing with an attachable, go the easy way :)
-        if(data instanceof SimpleAttachableMaterialData)
-            return stringFormat(data.getItemType().name());
-
-        sData = data.toString().toLowerCase();
-
-        Pattern p = Pattern.compile("\\(-?[0-9]+\\)");
-        Matcher m = p.matcher(sData);
-        sData = m.replaceAll("");
-        sData = sData.replace("_", " ");
-
-        StringBuffer sb = new StringBuffer(sData.length());
-        p = Pattern.compile("(^|\\W)([a-z])");
-        m = p.matcher(sData);
-        while(m.find()) {
-            m.appendReplacement(sb, m.group(1) + m.group(2).toUpperCase() );
-        }
-
-        m.appendTail(sb);
-
-        return sb.toString();
-    }
-
     private static String stringFormat(String sMaterial){
         sMaterial = sMaterial.replace("_"," ");
         Pattern p = Pattern.compile("(^|\\W)([a-z])");
@@ -230,10 +196,7 @@ public class itemUtil {
             else sItems += ", ";
             String newItemMeta = SignShopItemMeta.getName(entry.getKey());
             String count = (SignShopItemMeta.getTextColor() + entry.getValue().toString() + " ");
-            if(newItemMeta.isEmpty())
-                sItems += (count + formatData(entry.getKey().getData()));
-            else
-                sItems += (count + newItemMeta);
+            sItems += (count + newItemMeta);
             if(itemUtil.isWriteableBook(entry.getKey())) {
                 IBookItem book = BookFactory.getBookItem(entry.getKey());
                 if(book != null && (book.getAuthor() != null || book.getTitle() != null))
