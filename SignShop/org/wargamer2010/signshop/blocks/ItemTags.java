@@ -2,19 +2,24 @@ package org.wargamer2010.signshop.blocks;
 
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 
 public class ItemTags implements IItemTags {
     @Override
-    public org.bukkit.inventory.ItemStack copyTags(org.bukkit.inventory.ItemStack from, org.bukkit.inventory.ItemStack to) {
+    public ItemStack copyTags(ItemStack from, ItemStack to) {
         if(from == null || to == null || from.getItemMeta() == null)
             return to;
         to.setItemMeta(from.getItemMeta().clone());
         return to;
     }
 
-    @SuppressWarnings("deprecation")
 	@Override
-    public org.bukkit.inventory.ItemStack getCraftItemstack(Material mat, Integer amount, Short damage) {
-        return new org.bukkit.inventory.ItemStack(mat, amount, damage);
+    public ItemStack getCraftItemstack(Material mat, Integer amount, Short damage) {
+		ItemStack item = new ItemStack(mat, amount);
+		if(item.getItemMeta() instanceof Damageable) {
+			((Damageable)item.getItemMeta()).setDamage(damage);
+		}
+        return item;
     }
 }
