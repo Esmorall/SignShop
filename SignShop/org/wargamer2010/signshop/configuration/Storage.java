@@ -11,7 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.io.*;
@@ -375,11 +377,11 @@ public class Storage implements Listener, Runnable {
         return signs;
     }
 
-    public List<Seller> getShopsByBlock(Block bBlock) {
-        List<Seller> tempsellers = new LinkedList<Seller>();
-        for(Map.Entry<Location, Seller> entry : sellers.entrySet())
-            if(entry.getValue().getActivatables().contains(bBlock) || entry.getValue().getContainables().contains(bBlock))
-                tempsellers.add(entry.getValue());
+    public Set<Seller> getShopsByBlock(Block bBlock) {
+    	Set<Seller> tempsellers = new HashSet<>();
+        for(Seller entry : sellers.values())
+            if(entry.getActivatables().contains(bBlock) || entry.getContainables().contains(bBlock))
+                tempsellers.add(entry);
         return tempsellers;
     }
 

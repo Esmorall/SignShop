@@ -328,7 +328,7 @@ public class SignShopPlayerListener implements Listener {
                 signshopUtil.registerClickedMaterial(event);
             }
         }
-        List<Seller> touchedShops = Storage.get().getShopsByBlock(bClicked);
+        Set<Seller> touchedShops = Storage.get().getShopsByBlock(bClicked);
         if(!touchedShops.isEmpty()) {
             for(Seller shop : touchedShops) {
                 SSTouchShopEvent touchevent = new SSTouchShopEvent(ssPlayer, shop, event.getAction(), bClicked);
