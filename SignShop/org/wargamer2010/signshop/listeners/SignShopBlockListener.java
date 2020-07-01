@@ -1,11 +1,14 @@
 package org.wargamer2010.signshop.listeners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import java.util.List;
@@ -62,12 +65,50 @@ public class SignShopBlockListener implements Listener {
         return true;
     }
 
+    
+    public static Material[] linkMaterials = new Material[]{
+    		Material.CHEST,
+    		Material.TRAPPED_CHEST,
+    		Material.DROPPER,
+    		Material.HOPPER,
+    		Material.ANVIL,
+    		Material.DISPENSER,
+    		Material.FURNACE,
+    		Material.BREWING_STAND,
+    		Material.ENCHANTING_TABLE,
+    		Material.LEVER,
+    		Material.JUKEBOX,
+    		Material.OAK_DOOR,
+    		Material.OAK_SIGN,
+    		Material.OAK_WALL_SIGN,
+    		Material.DARK_OAK_DOOR,
+    		Material.DARK_OAK_SIGN,
+    		Material.DARK_OAK_WALL_SIGN,
+    		Material.BIRCH_DOOR,
+    		Material.BIRCH_SIGN,
+    		Material.BIRCH_WALL_SIGN,
+    		Material.SPRUCE_DOOR,
+    		Material.SPRUCE_SIGN,
+    		Material.SPRUCE_WALL_SIGN,
+    		Material.JUNGLE_DOOR,
+    		Material.JUNGLE_SIGN,
+    		Material.JUNGLE_WALL_SIGN,
+    		Material.ACACIA_DOOR,
+    		Material.ACACIA_SIGN,
+    		Material.ACACIA_WALL_SIGN,
+    		Material.IRON_DOOR
+    };
+    
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
         // We want to run at the Highest level so we can tell if other plugins cancelled the event
         // But we don't want to run at Monitor since we want to be able to cancel the event ourselves
-        if(event.isCancelled())
-            return;
+        if(event.isCancelled()) {
+        	return;
+        }
+        if(!Arrays.asList(linkMaterials).contains(event.getBlock().getType())) {
+        	return;
+        }
         if(!canBreakBlock(event.getBlock(), event.getPlayer(), true))
             event.setCancelled(true);
     }

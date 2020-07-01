@@ -1,5 +1,6 @@
 package org.wargamer2010.signshop.listeners;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -327,6 +328,9 @@ public class SignShopPlayerListener implements Listener {
             if(!runSpecialOperations(event)) {
                 signshopUtil.registerClickedMaterial(event);
             }
+        }
+        if(!Arrays.asList(SignShopBlockListener.linkMaterials).contains(bClicked.getType())) {
+        	return;
         }
         Set<Seller> touchedShops = Storage.get().getShopsByBlock(bClicked);
         if(!touchedShops.isEmpty()) {
